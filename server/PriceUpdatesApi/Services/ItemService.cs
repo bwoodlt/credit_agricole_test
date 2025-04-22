@@ -23,8 +23,7 @@ namespace PriceUpdatesApi.Services
         public ItemService()
         {
             // we're using a static list here for this sample exercise. we initialize the items list only once to avoid reinitialization on every request
-            // this is a simple in-memory store, in a real application I'd use a database
-            // and a repository pattern
+            // this is a simple in-memory store, in a real application I'd use get data from a database or other persistent storage
             if (!_isInitialized)
             {
                 lock (_lock)

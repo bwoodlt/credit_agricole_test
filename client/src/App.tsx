@@ -11,7 +11,6 @@ function App() {
   const intervalRef = useRef<number | null>(null);
   const prevItemsRef = useRef<Item[]>([]);
 
-  // Initial fetch of items
   useEffect(() => {
     const getItems = async () => {
       try {
@@ -30,14 +29,14 @@ function App() {
     getItems();
   }, []);
 
-  // Handle subscription for price updates
+  // handle subscription for price updates
   useEffect(() => {
     if (isSubscribed) {
       const fetchUpdates = async () => {
         try {
           const updatedItems = await fetchPriceUpdates();
 
-          // Calculate price changes for visual indicators
+          // we need this price changes for visual indicators
           const itemsWithChanges = updatedItems.map((item) => {
             const prevItem = prevItemsRef.current.find(
               (prev) => prev.id === item.id
@@ -62,16 +61,16 @@ function App() {
         }
       };
 
-      // Fetch updates immediately and then every second
+      // fetch updates immediately and then every second
       fetchUpdates();
       intervalRef.current = window.setInterval(fetchUpdates, 1000);
     } else if (intervalRef.current !== null) {
-      // Clear interval when unsubscribed
+      // clear interval when unsubscribed
       window.clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
 
-    // Clean up interval on component unmount
+    // when we unmount, we need to clean up the interval
     return () => {
       if (intervalRef.current !== null) {
         window.clearInterval(intervalRef.current);
