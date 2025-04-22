@@ -2,11 +2,14 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 import * as apiService from './services/api';
 
-// mock the API service
-jest.mock('./services/api', () => ({
-  fetchItems: jest.fn(),
-  fetchPriceUpdates: jest.fn(),
-}));
+jest.mock('./services/api');
+const mockedFetchItems = apiService.fetchItems as jest.MockedFunction<
+  typeof apiService.fetchItems
+>;
+const mockedFetchPriceUpdates =
+  apiService.fetchPriceUpdates as jest.MockedFunction<
+    typeof apiService.fetchPriceUpdates
+  >;
 
 describe('App component', () => {
   const mockItems = [
@@ -19,15 +22,14 @@ describe('App component', () => {
     jest.resetAllMocks();
 
     // our default mock implementations for core services
-    apiService.fetchItems.mockResolvedValue(mockItems);
-    apiService.fetchPriceUpdates.mockResolvedValue([
+    mockedFetchItems.mockResolvedValue(mockItems);
+    mockedFetchPriceUpdates.mockResolvedValue([
       { ...mockItems[0], price: 11.99, updatedAt: '2025-04-22T10:01:00Z' },
       { ...mockItems[1], price: 19.5, updatedAt: '2025-04-22T10:01:00Z' },
     ]);
   });
 
   afterEach(() => {
-    // Ensure timers are reset after each test
     jest.useRealTimers();
   });
 
@@ -45,7 +47,7 @@ describe('App component', () => {
 
     // wait for items to load
     await waitFor(() => {
-      expect(apiService.fetchItems).toHaveBeenCalled();
+      expect(mockedFetchItems).toHaveBeenCalled();
     });
   });
 
@@ -64,8 +66,7 @@ describe('App component', () => {
     expect(screen.getByText('Item 1')).toBeInTheDocument();
     expect(screen.getByText('Item 2')).toBeInTheDocument();
 
-    // verify API was called
-    expect(apiService.fetchItems).toHaveBeenCalled();
+    expect(mockedFetchItems).toHaveBeenCalled();
   });
 
   test('should fetch price updates when subscribed', async () => {
@@ -84,7 +85,7 @@ describe('App component', () => {
     await Promise.resolve();
 
     // verify updates API was called once immediately
-    expect(apiService.fetchPriceUpdates).toHaveBeenCalled();
+    expect(mockedFetchPriceUpdates).toHaveBeenCalled();
 
     jest.advanceTimersByTime(1000);
 
@@ -92,6 +93,6 @@ describe('App component', () => {
     await Promise.resolve();
 
     // verify updates API was called again
-    expect(apiService.fetchPriceUpdates).toHaveBeenCalledTimes(2);
+    expect(mockedFetchPriceUpdates).toHaveBeenCalledTimes(2);
   });
 });
