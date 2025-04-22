@@ -6,6 +6,8 @@ A real-time price updates dashboard built with React TypeScript frontend and .NE
 
 This application displays a list of 10 items with their IDs, names, prices, and updated timestamps. Users can subscribe to real-time price updates, which are pushed from the server every second. The UI provides visual indicators showing whether prices have gone up, down, or remained unchanged.
 
+Check `output` folder for screenshots.
+
 ## Features
 
 - Display a list of items with ID, name, price, and updated timestamp
