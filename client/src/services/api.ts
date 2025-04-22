@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { Item } from '../types';
 
-// Define API URL based on environment
-const API_URL = 'http://localhost:5210/api'; // Using correct HTTP port from launchSettings.json
+const API_URL = 'http://localhost:5210/api';
 
 export const fetchItems = async (): Promise<Item[]> => {
   try {
