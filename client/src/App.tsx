@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Item } from './types';
-import { fetchItems, fetchPriceUpdates } from './services/api';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
+import { fetchItems, fetchPriceUpdates } from './services/api';
+import { Item } from './types';
 
 function App() {
   const [items, setItems] = useState<Item[]>([]);
@@ -36,12 +36,14 @@ function App() {
       const fetchUpdates = async () => {
         try {
           const updatedItems = await fetchPriceUpdates();
-          
+
           // Calculate price changes for visual indicators
           const itemsWithChanges = updatedItems.map((item) => {
-            const prevItem = prevItemsRef.current.find(prev => prev.id === item.id);
+            const prevItem = prevItemsRef.current.find(
+              (prev) => prev.id === item.id
+            );
             let priceChange: 'up' | 'down' | 'unchanged' = 'unchanged';
-            
+
             if (prevItem) {
               if (item.price > prevItem.price) {
                 priceChange = 'up';
@@ -49,10 +51,10 @@ function App() {
                 priceChange = 'down';
               }
             }
-            
+
             return { ...item, priceChange };
           });
-          
+
           setItems(itemsWithChanges);
           prevItemsRef.current = updatedItems;
         } catch (err) {
@@ -86,21 +88,25 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <header className="app-header">
+    <div className='app'>
+      <header className='app-header'>
         <h1>Price Updates Dashboard</h1>
       </header>
-      <main className="app-content">
-        <div className="subscription-controls">
+      <main className='app-content'>
+        <div className='subscription-controls'>
           <button
-            className={`button ${isSubscribed ? 'button-disabled' : 'button-primary'}`}
+            className={`button ${
+              isSubscribed ? 'button-disabled' : 'button-primary'
+            }`}
             onClick={handleSubscribe}
             disabled={isSubscribed}
           >
             Subscribe to Price Updates
           </button>
           <button
-            className={`button ${!isSubscribed ? 'button-disabled' : 'button-secondary'}`}
+            className={`button ${
+              !isSubscribed ? 'button-disabled' : 'button-secondary'
+            }`}
             onClick={handleUnsubscribe}
             disabled={!isSubscribed}
           >
@@ -108,13 +114,13 @@ function App() {
           </button>
         </div>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className='error-message'>{error}</div>}
 
         {isLoading ? (
-          <div className="loading">Loading items...</div>
+          <div className='loading'>Loading items...</div>
         ) : (
-          <div className="items-container">
-            <table className="items-table">
+          <div className='items-container'>
+            <table className='items-table'>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -125,14 +131,21 @@ function App() {
               </thead>
               <tbody>
                 {items.map((item) => (
-                  <tr key={item.id} className={`item-row ${item.priceChange || ''}`}>
+                  <tr
+                    key={item.id}
+                    className={`item-row ${item.priceChange || ''}`}
+                  >
                     <td>{item.id}</td>
                     <td>{item.name}</td>
-                    <td className="price-cell">
+                    <td className='price-cell'>
                       ${item.price.toFixed(2)}
                       {item.priceChange && (
                         <span className={`price-indicator ${item.priceChange}`}>
-                          {item.priceChange === 'up' ? '▲' : item.priceChange === 'down' ? '▼' : ''}
+                          {item.priceChange === 'up'
+                            ? '▲'
+                            : item.priceChange === 'down'
+                            ? '▼'
+                            : ''}
                         </span>
                       )}
                     </td>
