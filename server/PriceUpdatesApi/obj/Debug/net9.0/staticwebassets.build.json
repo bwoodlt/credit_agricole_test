@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "ElmYc37kOjwqt7r6M+o/lxqADFVjn/jNrYbwrNvqzbU=",
+  "Source": "PriceUpdatesApi",
+  "BasePath": "_content/PriceUpdatesApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
