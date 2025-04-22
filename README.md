@@ -17,12 +17,14 @@ This application displays a list of 10 items with their IDs, names, prices, and 
 ## Tech Stack
 
 ### Frontend
+
 - React with TypeScript
-- Custom CSS for styling (no external UI libraries)
+- CSS for styling
 - Axios for API communication
-- React Testing Library for unit tests
+- React Testing Library for unit tests (minimally for now)
 
 ### Backend
+
 - .NET API
 - In-memory data store for demonstration purposes
 - RESTful endpoints for fetching items and price updates
@@ -30,12 +32,14 @@ This application displays a list of 10 items with their IDs, names, prices, and 
 ## Running the Application
 
 ### Backend
+
 ```bash
 cd server/PriceUpdatesApi
 dotnet run
 ```
 
 ### Frontend
+
 ```bash
 cd client
 npm install
@@ -43,6 +47,7 @@ npm start
 ```
 
 ## Testing
+
 ```bash
 cd client
 npm test
@@ -53,6 +58,7 @@ npm test
 The application follows a clean separation of concerns:
 
 - **Frontend**:
+
   - Components for UI display and user interaction
   - Services layer for API communication
   - Type definitions for type safety
